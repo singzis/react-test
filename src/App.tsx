@@ -1,28 +1,55 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import { WithoutForwardRef, Option } from './components/withoutForwardRef'
+import { WithForwardRef } from './components/withForwardRef'
 
-// https://stackoverflow.com/questions/58469229/react-with-typescript-generics-while-using-react-forwardref/58473012#58473012
-
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+interface CustomOption extends Option<number> {
+  action: (value: number) => void
 }
 
-export default App;
+const App: React.FC = () => {
+  return (
+    <div>
+      <h3>Without Forward Ref</h3>
+      <h4>Basic</h4>
+      <WithoutForwardRef
+        options={[
+          { value: 'test', label: 'Test' },
+          { value: 1, label: 'Test Two' },
+        ]}
+      />
+      <h4>Custom</h4>
+      <WithoutForwardRef<CustomOption>
+        options={[
+          {
+            value: 1,
+            label: 'Test',
+            action: value => {
+              console.log('ACTION', value)
+            },
+          },
+        ]}
+      />
+      <h3>With Forward Ref</h3>
+      <h4>Basic</h4>
+      <WithForwardRef
+        options={[
+          { value: 'test', label: 'Test' },
+          { value: 1, label: 'Test Two' },
+        ]}
+      />
+      <h4>Custom (WitForwardRef is not generic here)</h4>
+      <WithForwardRef<CustomOption>
+        options={[
+          {
+            value: 1,
+            label: 'Test',
+            action: value => {
+              console.log('ACTION', value)
+            },
+          },
+        ]}
+      />
+    </div>
+  )
+}
+export default App
