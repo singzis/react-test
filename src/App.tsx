@@ -4,6 +4,7 @@ import { WithForwardRef } from './components/withForwardRef'
 
 interface CustomOption extends Option<number> {
   action: (value: number) => void
+  flag: boolean
 }
 
 const App: React.FC = () => {
@@ -26,6 +27,7 @@ const App: React.FC = () => {
             action: value => {
               console.log('ACTION', value)
             },
+            flag: true,
           },
         ]}
       />
@@ -36,9 +38,11 @@ const App: React.FC = () => {
           { value: 'test', label: 'Test' },
           { value: 1, label: 'Test Two' },
         ]}
+        // ref={null}
       />
       <h4>Custom (WitForwardRef is not generic here)</h4>
       <WithForwardRef<CustomOption>
+        // ref={null}
         options={[
           {
             value: 1,
@@ -46,6 +50,15 @@ const App: React.FC = () => {
             action: value => {
               console.log('ACTION', value)
             },
+            flag: false,
+          },
+          {
+            value: 12,
+            label: 'Test2',
+            action: value => {
+              console.log('ACTION', value)
+            },
+            flag: true,
           },
         ]}
       />
