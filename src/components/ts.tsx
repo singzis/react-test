@@ -14,27 +14,13 @@ interface Cat {
   miao: string;
 }
 
-const isDog = function (animal: Dog | Cat): animal is Dog {
-  return 'wang' in animal;
-}
-
-function isCat(animal: Dog | Cat): animal is Cat{
-  return 'miao' in animal
-}
-
-
-
-interface Option<O = unknown> {
-  name: O
-}
-
-interface Props<T> {
-  list: T[]
-}
-
-const getName = <T extends Option>(p: Props<T>) => {
-  return p.list
+const getName = <T extends Dog | Cat>(animal: T) => {
+  if ('wang' in animal) {
+    return animal.wang; // ts(2339)
+  }
+  return animal.miao; // ts(2339)
 };
+
 
 const Ts = () => {
   return (<div>1</div>)
